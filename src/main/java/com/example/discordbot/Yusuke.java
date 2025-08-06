@@ -49,18 +49,20 @@ public class Yusuke extends ListenerAdapter {
         if (event.getAuthor().isBot()) return;
         // We don't want to respond to other bot accounts, including ourself
 
-
+        Random random = new Random();
         User user = event.getAuthor();
         Message message = event.getMessage();
         String content = message.getContentRaw();
 
         if (content.startsWith("!8ball")) {
+           // event.getChannel().sendTyping().queue();
             Random rng = new Random(); // The wheel of fate SPINS!
             int choice = rng.nextInt(responses.length);
             event.getChannel().sendMessage(responses[choice]).queue();
         }
 
         if (content.equalsIgnoreCase("!blackjack")) {
+         //   event.getChannel().sendTyping().queue();
             if (inGame.getOrDefault(user, false)) {
                 event.getChannel().sendMessage("You're already in a game!").queue();
                 return;
@@ -83,6 +85,7 @@ public class Yusuke extends ListenerAdapter {
         }
 
         if (content.equalsIgnoreCase("!hit")) {
+         //   event.getChannel().sendTyping().queue();
             if (!inGame.getOrDefault(user, false)) {
                 event.getChannel().sendMessage("Start a game with `!blackjack` first!").queue();
                 return;
@@ -104,6 +107,7 @@ public class Yusuke extends ListenerAdapter {
         }
 
         if (content.equalsIgnoreCase("!stand")) {
+        //    event.getChannel().sendTyping().queue();
             if (!inGame.getOrDefault(user, false)) {
                 event.getChannel().sendMessage("Start a game with `!blackjack` first!").queue();
                 return;
@@ -139,18 +143,21 @@ public class Yusuke extends ListenerAdapter {
         // getContentRaw() is an atomic getter
         // getContentDisplay() is a lazy getter which modifies the content for e.g. console view (strip discord formatting)
         if (content.contains("!ping")) {
+        //    event.getChannel().sendTyping().queue();
             event.getChannel().sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
         } else if (event.getMessage().getMentions().isMentioned(event.getJDA().getSelfUser()) & content.contains("+gocrazy"))  {
+            event.getChannel().sendTyping().queue();
             try {
                 DeepSeekApiClient deepSeekApi = new DeepSeekApiClient(apiKey);
                 //Scanner scanner = new Scanner(System.in);
 
                 // while (true) {
                 //System.out.print("Enter your message to DeepSeek (or 'quit' to exit): ");
-                String userInput = ("You are Yusuke Kitagawa from Persona 5. Please respond in-character as if you were him. You are also insane and unpredictable, and will respond to things in a confusing, indirect, and nonsensical way. Please ramble crazily in response to the following query or statement: " + content.toLowerCase());
+                String userInput = ("You are Yusuke Kitagawa from Persona 5. Please respond in-character as if you were him. You are also insane and unpredictable, and will respond to things in a confusing, indirect, and nonsensical way. Please ramble crazily in response to the following query or statement written by " + event.getAuthor().toString() + ": " + content.toLowerCase());
 
                 AskYusuke(event, deepSeekApi, userInput);
-                event.getChannel().sendMessage("https://media.tenor.com/el4qYKk5PpkAAAAM/yusuke-test-gif.gif").queue();
+                int rnd = random.nextInt(100);
+                if  (rnd < 20) {event.getChannel().sendMessage("https://media.tenor.com/el4qYKk5PpkAAAAM/yusuke-test-gif.gif").queue();}
                 // }
 
                 //scanner.close();
@@ -158,16 +165,18 @@ public class Yusuke extends ListenerAdapter {
                 event.getChannel().sendMessage("durr I'm a dumbass: " + e.getMessage()).queue();
             }
         } else if (event.getMessage().getMentions().isMentioned(event.getJDA().getSelfUser()))  {
+            event.getChannel().sendTyping().queue();
             try {
                 DeepSeekApiClient deepSeekApi = new DeepSeekApiClient(apiKey);
                 //Scanner scanner = new Scanner(System.in);
 
                // while (true) {
                     //System.out.print("Enter your message to DeepSeek (or 'quit' to exit): ");
-                    String userInput = ("You are Yusuke Kitagawa from Persona 5. Please respond in-character as if you were him. Respond to the following query or statement: " + content.toLowerCase());
+                    String userInput = ("You are Yusuke Kitagawa from Persona 5. Please respond in-character as if you were him. Respond to the following query or statement written by " + event.getAuthor().toString() + ": " + content.toLowerCase());
 
                 AskYusuke(event, deepSeekApi, userInput);
-                event.getChannel().sendMessage("https://media.tenor.com/el4qYKk5PpkAAAAM/yusuke-test-gif.gif").queue();
+                int rnd = random.nextInt(100);
+                if  (rnd < 20) {event.getChannel().sendMessage("https://media.tenor.com/el4qYKk5PpkAAAAM/yusuke-test-gif.gif").queue();}
                 // }
 
                 //scanner.close();
@@ -175,9 +184,9 @@ public class Yusuke extends ListenerAdapter {
                 event.getChannel().sendMessage("durr I'm a dumbass: " + e.getMessage()).queue();
             }
         } else if (content.contains(" ")) {
-            Random random = new Random();
-            int randomNumber = random.nextInt(300);
+            int randomNumber = random.nextInt(50);
             if (randomNumber < 10) {
+                event.getChannel().sendTyping().queue();
                 if (randomNumber == 1) {
                     event.getChannel().sendMessage("https://i.redd.it/zkdreo021a961.gif").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
                 } else if (randomNumber == 2 & event.getMessage().getAuthor() != event.getJDA().getSelfUser()) {
@@ -197,13 +206,20 @@ public class Yusuke extends ListenerAdapter {
                         DeepSeekApiClient deepSeekApi = new DeepSeekApiClient(apiKey);
                         //Scanner scanner = new Scanner(System.in);
 
+                        String userInput = "";
+                        if (randomNumber <= 8) {
+                            userInput = ("You are Yusuke Kitagawa from Persona 5. Please respond in-character as if you were him. Respond to the following previous message from " + event.getAuthor().toString() + ": " + content.toLowerCase());
+                        } else {
+                            userInput = ("You are Yusuke Kitagawa from Persona 5. Please respond in-character as if you were him. You are also insane and unpredictable, and will respond to things in a confusing, indirect, and nonsensical way. Please ramble crazily in response to the previous message from " + event.getAuthor().toString() + ": " + content.toLowerCase());
+                        }
                         // while (true) {
                         //System.out.print("Enter your message to DeepSeek (or 'quit' to exit): ");
-                        String userInput = ("You are Yusuke Kitagawa from Persona 5. Please respond in-character as if you were him. Respond to the following previous message from " + event.getAuthor().toString() + ": " + content.toLowerCase());
+
 
                         AskYusuke(event, deepSeekApi, userInput);
                         // }
-                        event.getChannel().sendMessage("https://media.tenor.com/el4qYKk5PpkAAAAM/yusuke-test-gif.gif").queue();
+                        int rnd = random.nextInt(100);
+                        if  (rnd < 20) {event.getChannel().sendMessage("https://media.tenor.com/el4qYKk5PpkAAAAM/yusuke-test-gif.gif").queue();}
                         //scanner.close();
                     } catch (Exception e) {
                         event.getChannel().sendMessage("durr I'm a dumbass: " + e.getMessage()).queue();
@@ -217,7 +233,8 @@ public class Yusuke extends ListenerAdapter {
         deepSeekApi.sendMessageWithStreaming(userInput, false, new DeepSeekApiClient.StreamCallback() {
             @Override
             public void onMessage(String message) {
-                event.getChannel().sendMessage(message).queue();
+                event.getMessage().reply(message).queue();
+                //event.getChannel().sendMessage(message).queue();
             }
 
             @Override
