@@ -150,6 +150,7 @@ public class Yusuke extends ListenerAdapter {
                 String userInput = ("You are Yusuke Kitagawa from Persona 5. Please respond in-character as if you were him. You are also insane and unpredictable, and will respond to things in a confusing, indirect, and nonsensical way. Please ramble crazily in response to the following query or statement: " + content.toLowerCase());
 
                 AskYusuke(event, deepSeekApi, userInput);
+                event.getChannel().sendMessage("https://media.tenor.com/el4qYKk5PpkAAAAM/yusuke-test-gif.gif").queue();
                 // }
 
                 //scanner.close();
@@ -166,6 +167,7 @@ public class Yusuke extends ListenerAdapter {
                     String userInput = ("You are Yusuke Kitagawa from Persona 5. Please respond in-character as if you were him. Respond to the following query or statement: " + content.toLowerCase());
 
                 AskYusuke(event, deepSeekApi, userInput);
+                event.getChannel().sendMessage("https://media.tenor.com/el4qYKk5PpkAAAAM/yusuke-test-gif.gif").queue();
                 // }
 
                 //scanner.close();
@@ -177,11 +179,11 @@ public class Yusuke extends ListenerAdapter {
             int randomNumber = random.nextInt(300);
             if (randomNumber < 10) {
                 if (randomNumber == 1) {
-                    event.getChannel().sendMessage("PEERSONAA DIOOO!!!!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
-                } else if (randomNumber == 2) {
-                    event.getChannel().sendMessage("FUCK YOU AHHAHHHHHHASHDHAHHHH").queue();
+                    event.getChannel().sendMessage("https://i.redd.it/zkdreo021a961.gif").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
+                } else if (randomNumber == 2 & event.getMessage().getAuthor() != event.getJDA().getSelfUser()) {
+                    event.getChannel().sendMessage("https://media.tenor.com/el4qYKk5PpkAAAAM/yusuke-test-gif.gif").queue();
                 } else if (randomNumber == 3) {
-                    event.getChannel().sendMessage("https://media.tenor.com/WpQU9sQGHfkAAAAM/yusuke-persona5.gif").queue();
+                    event.getChannel().sendMessage("https://i.pinimg.com/originals/0f/0d/29/0f0d29ab1469887f497aef20079e987b.gif").queue();
                 } else if (randomNumber == 4) {
                     event.getChannel().sendMessage("https://media0.giphy.com/media/v1.Y2lkPTZjMDliOTUyZGJ4eTcyemYxMzJ0bXQwbDJ0NTlrNGN4eDZkOTA1NXVsNXNmZmNlNSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/z6TMaaNJKIAX6/source.gif").queue();
                    // event.getChannel().sendMessage("https://media.tenor.com/Ygr-K-GVRTMAAAAM/goku-dragon-ball.gif").queue();
@@ -190,7 +192,7 @@ public class Yusuke extends ListenerAdapter {
                 } else if (randomNumber == 6) {
                     event.getChannel().sendMessage("https://i.pinimg.com/originals/1a/43/2d/1a432d360ad65a2dc04a568e6b99b433.gif").queue();
                     //event.getChannel().sendMessage("I LOOOOVE DANGO").queue();
-                } else if (randomNumber == 7) {
+                } else {
                     try {
                         DeepSeekApiClient deepSeekApi = new DeepSeekApiClient(apiKey);
                         //Scanner scanner = new Scanner(System.in);
@@ -201,17 +203,11 @@ public class Yusuke extends ListenerAdapter {
 
                         AskYusuke(event, deepSeekApi, userInput);
                         // }
-
+                        event.getChannel().sendMessage("https://media.tenor.com/el4qYKk5PpkAAAAM/yusuke-test-gif.gif").queue();
                         //scanner.close();
                     } catch (Exception e) {
                         event.getChannel().sendMessage("durr I'm a dumbass: " + e.getMessage()).queue();
                     }
-                } else if (randomNumber == 8) {
-                    event.getChannel().sendMessage("https://i.redd.it/zkdreo021a961.gif").queue();
-                } else if (randomNumber == 9) {
-                    event.getChannel().sendMessage("https://i.pinimg.com/originals/0f/0d/29/0f0d29ab1469887f497aef20079e987b.gif").queue();
-                } else {
-                    event.getChannel().sendMessage("https://media.tenor.com/el4qYKk5PpkAAAAM/yusuke-test-gif.gif").queue();
                 }
             }
         }
